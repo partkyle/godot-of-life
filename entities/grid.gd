@@ -3,7 +3,7 @@ class_name Grid
 
 const CELL = preload("res://entities/cell.tscn")
 
-@export var size := Vector2(160, 90) * 0.5
+@export var size := Vector2(160, 90)
 @export var cell_size : Vector2
 
 @export var on_color := Color.CYAN
@@ -13,13 +13,6 @@ var paused := false
 
 var cells = {}
 
-var glider : Array[Vector2] = [
-	Vector2(1, 0),
-	Vector2(2, 1),
-	Vector2(0, 2),
-	Vector2(1, 2),
-	Vector2(2, 2),
-]
 
 func _ready() -> void:
 	cell_size = Vector2(get_viewport().size.x / size.x, get_viewport().size.y / size.y)
@@ -49,8 +42,6 @@ func _process(_delta: float) -> void:
 	if !paused:
 		generation()
 
-	#if !paused:
-		#generation()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -76,7 +67,7 @@ func wandomize() -> void:
 			cell.off()
 
 func create_glider() -> void:
-	for v in glider:
+	for v in GOL.glider:
 		var cell = cells.get(v)
 		if cell:
 			cell.on()

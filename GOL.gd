@@ -18,3 +18,11 @@ static func live_or_die(value: int, count: int) -> GOL.State:
 			return GOL.State.ALIVE
 
 	return GOL.State.UNCHANGED
+
+static var glider : Array[Vector2] = [
+	Vector2(1, 0),
+	Vector2(2, 1),
+	Vector2(0, 2),
+	Vector2(1, 2),
+	Vector2(2, 2),
+]
