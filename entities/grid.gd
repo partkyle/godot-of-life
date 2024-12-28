@@ -23,7 +23,7 @@ var glider : Array[Vector2] = [
 
 func _ready() -> void:
 	cell_size = Vector2(get_viewport().size.x / size.x, get_viewport().size.y / size.y)
-	
+
 	for y in range(size.y):
 		for x in range(size.x):
 			var cell = CELL.instantiate()
@@ -32,7 +32,7 @@ func _ready() -> void:
 			add_child(cell)
 			cell.off()
 			cells[pos] = cell
-	
+
 	for c in cells.values():
 		var neighbors : Array[Cell] = []
 		for y in range(c.grid_position.y - 1, c.grid_position.y + 2):
@@ -41,7 +41,7 @@ func _ready() -> void:
 				var neighbor = cells.get(n_pos)
 				if n_pos != c.grid_position && neighbor:
 					neighbors.push_back(neighbor)
-				
+
 		c.neighbors = neighbors
 
 
@@ -90,7 +90,7 @@ func count_neighbors(pos: Vector2) -> int:
 				var cell = cells.get(n_pos)
 				if cell && cell.value:
 					results += 1
-	
+
 	return results
 
 func generation() -> void:
@@ -101,15 +101,15 @@ func newgeneration() -> void:
 	var deaths = []
 
 	for cell in cells.values():
-		var status = cell.update()
-		if status == Cell.State.ALIVE:
+		var status = cell.live_or_die()
+		if status == GOL.State.ALIVE:
 			lifes.push_back(cell)
-		elif status == Cell.State.DEAD:
+		elif status == GOL.State.DEAD:
 			deaths.push_back(cell)
-	
+
 	for life in lifes:
 		life.on()
-	
+
 	for death in deaths:
 		death.off()
 
@@ -119,15 +119,15 @@ func oldgeneration() -> void:
 
 	for pos in cells:
 		var cell = cells[pos]
-		var status = live_or_die(cell.value, count_neighbors(pos))
-		if status == Cell.State.ALIVE:
+		var status = GOL.live_or_die(cell.value, count_neighbors(pos))
+		if status == GOL.State.ALIVE:
 			lifes.push_back(cell)
-		elif status == Cell.State.DEAD:	
+		elif status == GOL.State.DEAD:
 			deaths.push_back(cell)
 
 	for cell in lifes:
 		cell.on()
-	
+
 	for cell in deaths:
 		cell.off()
 
@@ -138,15 +138,3 @@ func all_off() -> void:
 func all_on() -> void:
 	for cell in cells.values():
 		cell.on()
-
-func live_or_die(val: int, v: int) -> Cell.State:
-	if val:
-		if v > 3:
-			return Cell.State.DEAD
-		elif v < 2:
-			return Cell.State.DEAD
-	else:
-		if v == 3:
-			return Cell.State.ALIVE
-	
-	return Cell.State.UNCHANGED

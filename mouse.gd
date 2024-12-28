@@ -28,12 +28,12 @@ func _process(_delta: float) -> void:
 	position = mouse_position + label_offset
 	var cell_pos := cell_position()
 	coordinates.text = str(cell_pos)
-	
+
 	var cell = grid.cells.get(cell_pos)
 	if cell:
 		for n in drawing_cells:
 			n.visible = false
-		
+
 		var visible_neighbors := 0
 		var neighbors_text = '['
 		for n in cell.neighbors:
@@ -45,8 +45,8 @@ func _process(_delta: float) -> void:
 			visible_neighbors += 1
 			neighbors_text += '(' + str(n.grid_position.x) + ', ' + str(n.grid_position.y) + ')'
 		neighbors_text += ']'
-			
+
 		neighbors.text = 'neighbors: ' + neighbors_text
-		
+
 		if cell:
-			live_or_die.text = 'live_or_die: ' +  str(grid.cells[cell_pos].update())
+			live_or_die.text = 'live_or_die: ' +  str(grid.cells[cell_pos].live_or_die())
