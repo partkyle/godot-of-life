@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk7sgx5ykydyd"]
+
+[ext_resource type="Script" path="res://entities/grid.gd" id="1_tce1k"]
+[ext_resource type="Script" path="res://mouse.gd" id="2_g0atd"]
+
+[node name="main" type="Node2D"]
+
+[node name="Grid" type="Node2D" parent="."]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("1_tce1k")
+
+[node name="Mouse" type="Node2D" parent="."]
+script = ExtResource("2_g0atd")
+
+[node name="Coordinates" type="Label" parent="Mouse"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Neighbors" type="Label" parent="Mouse"]
+offset_top = 23.0
+offset_right = 40.0
+offset_bottom = 46.0
+text = "asdfasdf"
+
+[node name="LiveOrDie" type="Label" parent="Mouse"]
+offset_top = 46.0
+offset_right = 66.0
+offset_bottom = 69.0
+text = "asdfasdf"
