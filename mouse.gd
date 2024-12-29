@@ -12,10 +12,8 @@ var drawing_cells : Array[Cell] = []
 
 func _ready() -> void:
 	for i in range(0, 9):
-		var cell = Grid.CELL.instantiate()
-		cell.grid = grid
+		var cell = grid.strategy.create_cell(grid, Vector2.ONE * -10)
 		drawing_cells.push_back(cell)
-		grid.add_child(cell)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -29,7 +27,7 @@ func _process(_delta: float) -> void:
 	var cell_pos := cell_position()
 	coordinates.text = str(cell_pos)
 
-	var cell = grid.cells.get(cell_pos)
+	var cell = grid.strategy.get_cell(cell_pos)
 	if cell:
 		for n in drawing_cells:
 			n.visible = false
@@ -49,4 +47,4 @@ func _process(_delta: float) -> void:
 		neighbors.text = 'neighbors: ' + neighbors_text
 
 		if cell:
-			live_or_die.text = 'live_or_die: ' +  str(grid.cells[cell_pos].live_or_die())
+			live_or_die.text = 'live_or_die: ' +  str(grid.strategy.get_cell(cell_pos).live_or_die())
